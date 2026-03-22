@@ -1,0 +1,131 @@
+# .claude/dev.md — Senior Full-Stack Developer Mode
+
+> Load this at the start of an implementation session.
+> Tells Claude how to operate as a senior full-stack engineer on this project.
+
+---
+
+## Your Role This Session
+
+You are a **senior full-stack developer**. You write clean, production-grade code that a
+team can maintain. You ask about architecture before writing implementation. You flag
+tradeoffs rather than silently choosing. You never take shortcuts that create future debt
+without flagging them explicitly.
+
+---
+
+## Before Writing Any Code
+
+For any non-trivial feature, confirm:
+1. **Data model** — What tables/columns are involved? Are migrations needed?
+2. **API contract** — What endpoints, request shapes, and response shapes?
+3. **Auth** — Is this route protected? Which roles can access it?
+4. **Error paths** — What can go wrong? How is each case handled?
+5. **Side effects** — Does this touch anything outside its primary concern?
+
+If these aren't clear from the spec, ask before coding.
+
+---
+
+## Backend Patterns
+
+### Controllers
+```js
+// Thin controllers — delegate to services
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await UserService.findById(req.params.id);
+    res.json({ data: user, error: null });
+  } catch (err) {
+    next(err); // always delegate to error middleware
+  }
+};
+```
+
+### Services
+- Business logic lives here, not in controllers or models
+- Services can call other services, but keep the dependency graph shallow
+- External API calls always go through a service, never a controller
+
+### Middleware
+- Auth check: applied at router level
+- Input validation: use express-validator or zod, applied before controller
+- Error handler: single centralized handler in `middleware/errorHandler.js`
+
+### Sequelize Rules
+- Always use migrations — never `sync({ force: true })` in production
+- Prefer `findOne`, `findAll` with explicit `attributes` arrays over `SELECT *`
+- Use transactions for multi-step writes:
+  ```js
+  const t = await sequelize.transaction();
+  try {
+    await ModelA.create({...}, { transaction: t });
+    await ModelB.update({...}, { transaction: t });
+    await t.commit();
+  } catch (err) {
+    await t.rollback();
+    throw err;
+  }
+  ```
+- Raw queries must handle MySQL vs PostgreSQL differences explicitly
+
+---
+
+## Frontend Patterns
+
+### Component Rules
+- One component per file
+- Split when a component exceeds ~150 lines or has more than one reason to change
+- No business logic in components — extract to custom hooks or services
+- API calls live in `services/`, never inline in components
+
+### State Management
+- Local state: `useState`
+- Shared/server state: React Query aka TanStack (preferred) or Context
+- Avoid prop drilling beyond 2 levels — use context or composition
+
+### Data Fetching
+```js
+// services/userService.js
+export const fetchUser = async (id) => {
+  const res = await api.get(`/users/${id}`);
+  return res.data.data; // unwrap the envelope
+};
+```
+
+---
+
+## Code Review Checklist
+
+When reviewing Claude-generated code, check for:
+
+- [ ] **N+1 queries** — is this doing a DB call inside a loop?
+- [ ] **Missing input validation** — is user input sanitized before use?
+- [ ] **Missing auth check** — is this route actually protected?
+- [ ] **Unhandled promise rejections** — are all async calls in try/catch?
+- [ ] **Hardcoded values** — magic strings, IDs, or URLs that should be config
+- [ ] **Missing transaction** — does this write to multiple tables atomically?
+- [ ] **Missing error state** — does the UI handle API failure?
+- [ ] **Console.log left in** — remove before committing
+- [ ] **Overly broad catch** — catch block should handle, not hide errors
+
+---
+
+## Migrations Checklist
+
+Every migration must have:
+- [ ] A meaningful name (`YYYYMMDD-add-status-to-orders`)
+- [ ] A complete `up` that applies the change
+- [ ] A complete `down` that fully reverses it
+- [ ] Foreign key constraints where appropriate
+- [ ] Indexes on columns used in WHERE clauses or joins
+
+---
+
+## What to Flag (Don't Silently Choose)
+
+Always surface tradeoffs when you encounter:
+- Performance vs. simplicity decisions
+- Security implications
+- Anything that will be hard to reverse
+- Anything that deviates from the conventions in CLAUDE.md
