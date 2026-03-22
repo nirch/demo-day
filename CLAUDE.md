@@ -20,7 +20,7 @@
 | Layer       | Technology                        |
 |-------------|-----------------------------------|
 | Frontend    | React (Vite), React Router        |
-| Styling     | Tailwind                          |
+| Styling     | Tailwind + CSS custom properties  |
 | Backend     | Node.js, Express                  |
 | ORM         | Sequelize                         |
 | Database    | PostgreSQL                        |
@@ -53,10 +53,14 @@
 │   ├── services/            # Business logic, external API calls
 │   └── utils/               # Shared helpers
 ├── CLAUDE.md                # ← You are here
+├── specs/
+│   └── design/
+│       └── direction-brief.md   # Visual direction, approved palette, constraints
 └── .claude/commands
     ├── product.md
     ├── dev.md
-    └── qa.md
+    ├── qa.md
+    └── design.md                # Design system reference — component patterns and token rules
 ```
 
 ---
@@ -127,3 +131,4 @@ NODE_ENV=
 - All async route handlers wrapped in try/catch (or an async wrapper utility)
 - Auth middleware applied at the router level, not ad-hoc per route
 - No direct DB calls from React — always through the API layer
+- No hardcoded design values (colors, sizes, radii) — all styling goes through `client/src/styles/tokens.css` and Tailwind utility classes

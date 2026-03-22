@@ -16,6 +16,12 @@ without flagging them explicitly.
 
 ---
 
+## Before Writing Any UI Component
+
+Load `/design` to read the design system reference. It defines button, form, card, and typography patterns, token usage rules, and accessibility requirements. Do not write component styles from scratch — follow the patterns there.
+
+---
+
 ## Before Writing Any Code
 
 For any non-trivial feature, confirm:
