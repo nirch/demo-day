@@ -2,7 +2,7 @@
 
 > This file is always active. It defines the project's non-negotiables: stack, structure,
 > conventions, and boundaries. Every session starts here.
-> For role-specific instructions, load the relevant file from `.claude/`.
+> For role-specific instructions, use `/dev`, `/product`, or `/qa`.
 
 ---
 
