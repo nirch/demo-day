@@ -8,10 +8,10 @@
 
 ## Project Overview
 
-<!-- FILL IN: What does this app do? Who is it for? What's the core value? -->
-**App:** [App name]
-**Purpose:** [One sentence]
-**Stage:** [MVP / Beta / Production]
+**App:** Demo Day
+**Purpose:** A judging platform for Full-Stack bootcamp demo days, allowing admins to set up events, judges to score team demos on configurable criteria, and viewers to follow results.
+**Stage:** MVP
+**Users:** Admin (event setup, invites), Judge (scoring, winner selection), Viewer (read-only access via invite link)
 
 ---
 
@@ -53,7 +53,7 @@
 │   ├── services/            # Business logic, external API calls
 │   └── utils/               # Shared helpers
 ├── CLAUDE.md                # ← You are here
-└── .claude/
+└── .claude/commands
     ├── product.md
     ├── dev.md
     └── qa.md
