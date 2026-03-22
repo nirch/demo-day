@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Day — Design Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Inter:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, sans-serif;
+      background: #f0ede8;
+      padding: 48px 24px;
+    }
+
+    h1.page-title {
+      text-align: center;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 48px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .option-label {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    /* ─────────────────────────────────────────
+       OPTION A — Warm Academic
+    ───────────────────────────────────────── */
+    .option-a {
+      background: #faf7f2;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    }
+
+    .option-a .nav {
+      padding: 20px 32px;
+      border-bottom: 1px solid #ede8df;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .option-a .nav .wordmark {
+      font-family: 'Lora', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: #2c1f14;
+      letter-spacing: -0.01em;
+    }
+
+    .option-a .nav .event-name {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #a0876a;
+      letter-spacing: 0.04em;
+    }
+
+    .option-a .body {
+      padding: 36px 32px;
+    }
+
+    .option-a .section-heading {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #2c1f14;
+      margin-bottom: 6px;
+    }
+
+    .option-a .section-sub {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #9c856c;
+      margin-bottom: 28px;
+    }
+
+    .option-a .team-card {
+      background: #fff;
+      border: 1px solid #ede8df;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .option-a .team-card .team-name {
+      font-family: 'Lora', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2c1f14;
+      margin-bottom: 4px;
+    }
+
+    .option-a .team-card .team-desc {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #9c856c;
+      margin-bottom: 16px;
+    }
+
+    .option-a .criteria-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .option-a .criteria-item {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .option-a .criteria-item label {
+      display: block;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #b59b80;
+      margin-bottom: 6px;
+    }
+
+    .option-a .score-input {
+      width: 100%;
+      border: 1px solid #e2dbd0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #2c1f14;
+      background: #fdf9f5;
+      outline: none;
+    }
+
+    .option-a .score-input:focus {
+      border-color: #c9a47a;
+      background: #fff;
+    }
+
+    .option-a .btn-primary {
+      display: inline-block;
+      margin-top: 24px;
+      background: #c9a47a;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+
+    .option-a .tag {
+      display: inline-block;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: #f0e9de;
+      color: #9c7a55;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+
+    /* ─────────────────────────────────────────
+       OPTION B — Soft Modern
+    ───────────────────────────────────────── */
+    .option-b {
+      background: #f8fafc;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    }
+
+    .option-b .nav {
+      padding: 20px 32px;
+      border-bottom: 1px solid #e8edf2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+    }
+
+    .option-b .nav .wordmark {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .option-b .nav .event-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .option-b .body {
+      padding: 36px 32px;
+    }
+
+    .option-b .section-heading {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .option-b .section-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 28px;
+    }
+
+    .option-b .team-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .option-b .team-card .team-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .option-b .team-card .team-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .option-b .criteria-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .option-b .criteria-item {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .option-b .criteria-item label {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+
+    .option-b .score-input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #0f172a;
+      background: #f8fafc;
+      outline: none;
+    }
+
+    .option-b .score-input:focus {
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    .option-b .btn-primary {
+      display: inline-block;
+      margin-top: 24px;
+      background: #6366f1;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+    }
+
+    .option-b .tag {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: #ede9fe;
+      color: #6366f1;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+
+    /* ─────────────────────────────────────────
+       OPTION C — Elevated Evening
+    ───────────────────────────────────────── */
+    .option-c {
+      background: #16112a;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 40px rgba(0,0,0,0.25);
+    }
+
+    .option-c .nav {
+      padding: 20px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .option-c .nav .wordmark {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #f5e6c8;
+      letter-spacing: 0.01em;
+    }
+
+    .option-c .nav .event-name {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #9b8faa;
+      letter-spacing: 0.04em;
+    }
+
+    .option-c .body {
+      padding: 36px 32px;
+    }
+
+    .option-c .section-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: #f5e6c8;
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .option-c .section-sub {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #7a6e89;
+      margin-bottom: 28px;
+    }
+
+    .option-c .team-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .option-c .team-card .team-name {
+      font-family: Inter, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #f0e8ff;
+      margin-bottom: 4px;
+    }
+
+    .option-c .team-card .team-desc {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #7a6e89;
+      margin-bottom: 16px;
+    }
+
+    .option-c .criteria-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .option-c .criteria-item {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .option-c .criteria-item label {
+      display: block;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b5f7a;
+      margin-bottom: 6px;
+    }
+
+    .option-c .score-input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #f0e8ff;
+      background: rgba(255,255,255,0.05);
+      outline: none;
+    }
+
+    .option-c .score-input:focus {
+      border-color: #f0b429;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .option-c .btn-primary {
+      display: inline-block;
+      margin-top: 24px;
+      background: #f0b429;
+      color: #16112a;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+
+    .option-c .tag {
+      display: inline-block;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(240,180,41,0.15);
+      color: #f0b429;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">Demo Day — Design Options</h1>
+
+  <div class="options">
+
+    <!-- OPTION A -->
+    <div>
+      <div class="option-label">Option A — Warm Academic</div>
+      <div class="option-a">
+        <div class="nav">
+          <span class="wordmark">Demo Day</span>
+          <span class="event-name">Elevation · March 2026</span>
+        </div>
+        <div class="body">
+          <div class="section-heading">Score the Teams</div>
+          <div class="section-sub">Rate each team on the criteria below. Your scores are saved automatically.</div>
+
+          <div class="team-card">
+            <div class="team-name">Team Launchpad <span class="tag">In Progress</span></div>
+            <div class="team-desc">A peer accountability app for remote teams</div>
+            <div class="criteria-row">
+              <div class="criteria-item">
+                <label>Innovation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Execution</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Presentation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary">Submit Scores</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION B -->
+    <div>
+      <div class="option-label">Option B — Soft Modern</div>
+      <div class="option-b">
+        <div class="nav">
+          <span class="wordmark">Demo Day</span>
+          <span class="event-name">Elevation · March 2026</span>
+        </div>
+        <div class="body">
+          <div class="section-heading">Score the Teams</div>
+          <div class="section-sub">Rate each team on the criteria below. Your scores are saved automatically.</div>
+
+          <div class="team-card">
+            <div class="team-name">Team Launchpad <span class="tag">In Progress</span></div>
+            <div class="team-desc">A peer accountability app for remote teams</div>
+            <div class="criteria-row">
+              <div class="criteria-item">
+                <label>Innovation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Execution</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Presentation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary">Submit Scores</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION C -->
+    <div>
+      <div class="option-label">Option C — Elevated Evening</div>
+      <div class="option-c">
+        <div class="nav">
+          <span class="wordmark">Demo Day</span>
+          <span class="event-name">Elevation · March 2026</span>
+        </div>
+        <div class="body">
+          <div class="section-heading">Score the Teams</div>
+          <div class="section-sub">Rate each team on the criteria below. Your scores are saved automatically.</div>
+
+          <div class="team-card">
+            <div class="team-name">Team Launchpad <span class="tag">In Progress</span></div>
+            <div class="team-desc">A peer accountability app for remote teams</div>
+            <div class="criteria-row">
+              <div class="criteria-item">
+                <label>Innovation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Execution</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+              <div class="criteria-item">
+                <label>Presentation</label>
+                <input class="score-input" type="number" placeholder="1–10" />
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary">Submit Scores</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

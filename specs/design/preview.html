@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Day — Token Preview</title>
+  <link rel="stylesheet" href="../../client/src/styles/tokens.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg-page);
+      color: var(--color-text-primary);
+      padding: 64px 48px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Page header ── */
+    .page-title {
+      font-size: var(--text-3xl);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .page-subtitle {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      margin-bottom: 64px;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 64px;
+    }
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-border-card);
+    }
+
+    /* ── Colors ── */
+    .swatch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .swatch {
+      width: 120px;
+    }
+    .swatch-box {
+      width: 120px;
+      height: 72px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.07);
+      margin-bottom: 8px;
+    }
+    .swatch-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+    .swatch-hex {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Spacing ── */
+    .spacing-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .spacing-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+      width: 100px;
+      flex-shrink: 0;
+    }
+    .spacing-bar {
+      height: 20px;
+      background: var(--color-accent-subtle);
+      border-radius: 4px;
+      border: 1px solid var(--color-accent);
+      opacity: 0.7;
+    }
+    .spacing-value {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    /* ── Typography ── */
+    .type-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--color-border-card);
+    }
+    .type-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .type-meta {
+      width: 160px;
+      flex-shrink: 0;
+    }
+    .type-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .type-value {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+    .type-sample {
+      color: var(--color-text-primary);
+    }
+
+    /* ── Radius ── */
+    .radius-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-end;
+    }
+    .radius-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .radius-box {
+      width: 80px;
+      height: 80px;
+      background: var(--color-accent-subtle);
+      border: 1.5px solid var(--color-accent);
+    }
+    .radius-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+    .radius-value {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Shadows ── */
+    .shadow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: flex-end;
+    }
+    .shadow-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .shadow-box {
+      width: 120px;
+      height: 80px;
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+    }
+    .shadow-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Transitions ── */
+    .transition-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: flex-end;
+    }
+    .transition-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .transition-box {
+      width: 120px;
+      height: 60px;
+      background: var(--color-accent-subtle);
+      border: 1.5px solid var(--color-accent);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+    }
+    .transition-box:hover {
+      background: var(--color-accent);
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+    .transition-fast  { transition: all var(--transition-fast); }
+    .transition-base  { transition: all var(--transition-base); }
+    .transition-slow  { transition: all var(--transition-slow); }
+
+    .transition-token {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+    .transition-value {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-title">Token Preview</div>
+  <div class="page-subtitle">Demo Day — Approved Palette (Option B · Soft Modern)</div>
+
+  <!-- ── COLORS ── -->
+  <div class="section">
+    <div class="section-label">Colors</div>
+    <div class="swatch-grid">
+
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-bg-page);"></div>
+        <div class="swatch-token">--color-bg-page</div>
+        <div class="swatch-hex">#f8fafc</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-bg-surface);"></div>
+        <div class="swatch-token">--color-bg-surface</div>
+        <div class="swatch-hex">#ffffff</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-bg-input);"></div>
+        <div class="swatch-token">--color-bg-input</div>
+        <div class="swatch-hex">#f8fafc</div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-border-nav);"></div>
+        <div class="swatch-token">--color-border-nav</div>
+        <div class="swatch-hex">#e8edf2</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-border-card);"></div>
+        <div class="swatch-token">--color-border-card</div>
+        <div class="swatch-hex">#e2e8f0</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-border-input);"></div>
+        <div class="swatch-token">--color-border-input</div>
+        <div class="swatch-hex">#e2e8f0</div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-text-primary);"></div>
+        <div class="swatch-token">--color-text-primary</div>
+        <div class="swatch-hex">#0f172a</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-text-secondary);"></div>
+        <div class="swatch-token">--color-text-secondary</div>
+        <div class="swatch-hex">#64748b</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-text-muted);"></div>
+        <div class="swatch-token">--color-text-muted</div>
+        <div class="swatch-hex">#94a3b8</div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-accent);"></div>
+        <div class="swatch-token">--color-accent</div>
+        <div class="swatch-hex">#6366f1</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background: var(--color-accent-subtle);"></div>
+        <div class="swatch-token">--color-accent-subtle</div>
+        <div class="swatch-hex">#ede9fe</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SPACING ── -->
+  <div class="section">
+    <div class="section-label">Spacing</div>
+    <div class="spacing-rows">
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-1</div>
+        <div class="spacing-bar" style="width: var(--spacing-1);"></div>
+        <div class="spacing-value">4px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-2</div>
+        <div class="spacing-bar" style="width: var(--spacing-2);"></div>
+        <div class="spacing-value">8px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-3</div>
+        <div class="spacing-bar" style="width: var(--spacing-3);"></div>
+        <div class="spacing-value">12px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-4</div>
+        <div class="spacing-bar" style="width: var(--spacing-4);"></div>
+        <div class="spacing-value">16px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-5</div>
+        <div class="spacing-bar" style="width: var(--spacing-5);"></div>
+        <div class="spacing-value">20px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-6</div>
+        <div class="spacing-bar" style="width: var(--spacing-6);"></div>
+        <div class="spacing-value">24px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-7</div>
+        <div class="spacing-bar" style="width: var(--spacing-7);"></div>
+        <div class="spacing-value">28px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-8</div>
+        <div class="spacing-bar" style="width: var(--spacing-8);"></div>
+        <div class="spacing-value">32px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-token">--spacing-9</div>
+        <div class="spacing-bar" style="width: var(--spacing-9);"></div>
+        <div class="spacing-value">36px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TYPOGRAPHY ── -->
+  <div class="section">
+    <div class="section-label">Typography — DM Sans</div>
+    <div class="type-rows">
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-xs / 400</span>
+          <span class="type-value">11px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-xs); font-weight: 400;">The quick brown fox jumps over the lazy dog</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-xs / 600</span>
+          <span class="type-value">11px · semibold</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">Criteria Label</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-sm / 500</span>
+          <span class="type-value">12px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-sm); font-weight: 500;">Event name · Elevation · March 2026</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-base / 400</span>
+          <span class="type-value">13px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-base); font-weight: 400; color: var(--color-text-secondary);">A peer accountability app for remote teams</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-md / 500</span>
+          <span class="type-value">14px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-md); font-weight: 500;">Submit Scores</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-lg / 500</span>
+          <span class="type-value">15px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-lg); font-weight: 500;">Score input — 8</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-xl / 600</span>
+          <span class="type-value">16px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.01em;">Team Launchpad</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-2xl / 600</span>
+          <span class="type-value">17px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-2xl); font-weight: 600;">Demo Day</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-token">--text-3xl / 600</span>
+          <span class="type-value">22px</span>
+        </div>
+        <div class="type-sample" style="font-size: var(--text-3xl); font-weight: 600; letter-spacing: -0.02em;">Score the Teams</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── BORDER RADIUS ── -->
+  <div class="section">
+    <div class="section-label">Border Radius</div>
+    <div class="radius-row">
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+        <div class="radius-token">--radius-sm</div>
+        <div class="radius-value">8px</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+        <div class="radius-token">--radius-md</div>
+        <div class="radius-value">12px</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+        <div class="radius-token">--radius-lg</div>
+        <div class="radius-value">16px</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius: var(--radius-pill); width: 140px; height: 40px;"></div>
+        <div class="radius-token">--radius-pill</div>
+        <div class="radius-value">9999px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SHADOWS ── -->
+  <div class="section">
+    <div class="section-label">Shadows</div>
+    <div class="shadow-row">
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: var(--shadow-sm);"></div>
+        <div class="shadow-token">--shadow-sm</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: var(--shadow-md);"></div>
+        <div class="shadow-token">--shadow-md</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-box" style="box-shadow: var(--shadow-lg);"></div>
+        <div class="shadow-token">--shadow-lg</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRANSITIONS ── -->
+  <div class="section">
+    <div class="section-label">Transitions — hover to preview</div>
+    <div class="transition-row">
+      <div class="transition-item">
+        <div class="transition-box transition-fast">Hover me</div>
+        <div class="transition-token">--transition-fast</div>
+        <div class="transition-value">100ms ease</div>
+      </div>
+      <div class="transition-item">
+        <div class="transition-box transition-base">Hover me</div>
+        <div class="transition-token">--transition-base</div>
+        <div class="transition-value">200ms ease</div>
+      </div>
+      <div class="transition-item">
+        <div class="transition-box transition-slow">Hover me</div>
+        <div class="transition-token">--transition-slow</div>
+        <div class="transition-value">300ms ease</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
