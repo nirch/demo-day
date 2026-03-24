@@ -4,6 +4,7 @@ import * as eventService from '../services/eventService';
 import StatusBadge from '../components/StatusBadge';
 import Button from '../components/Button';
 import TeamSection from '../components/TeamSection';
+import ScoringCriteriaSection from '../components/ScoringCriteriaSection';
 
 export default function EventDetailPage() {
   const { id } = useParams();
@@ -119,6 +120,7 @@ export default function EventDetailPage() {
       </div>
 
       <TeamSection eventId={id} eventStatus={event.status} />
+      <ScoringCriteriaSection eventId={id} eventStatus={event.status} />
     </div>
   );
 }
