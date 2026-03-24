@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import Spinner from './Spinner';
 
 const variants = {
@@ -12,17 +13,24 @@ const variants = {
     hover:bg-bg-page
     focus:ring-accent
   `,
+  danger: `
+    bg-transparent text-red-600
+    border border-red-200
+    hover:bg-red-50
+    focus:ring-red-400
+  `,
 };
 
-export default function Button({
+const Button = forwardRef(function Button({
   variant = 'primary',
   isLoading = false,
   disabled = false,
   children,
   ...props
-}) {
+}, ref) {
   return (
     <button
+      ref={ref}
       disabled={disabled || isLoading}
       aria-busy={isLoading || undefined}
       className={`
@@ -40,4 +48,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+});
+
+export default Button;

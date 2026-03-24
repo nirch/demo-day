@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import * as eventService from '../services/eventService';
 import StatusBadge from '../components/StatusBadge';
 import Button from '../components/Button';
+import TeamSection from '../components/TeamSection';
 
 export default function EventDetailPage() {
   const { id } = useParams();
@@ -116,6 +117,8 @@ export default function EventDetailPage() {
           </div>
         </dl>
       </div>
+
+      <TeamSection eventId={id} eventStatus={event.status} />
     </div>
   );
 }
