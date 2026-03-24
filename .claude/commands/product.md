@@ -91,3 +91,19 @@ Before a spec is handed to dev mode, confirm:
 - [ ] Edge cases are documented
 - [ ] Out-of-scope is explicit
 - [ ] No open questions remain (or they are flagged as deferred decisions)
+
+## Spec File Protocol
+
+At the end of every feature session, before closing:
+
+1. Generate a filename in this format:
+   specs/features/YYYY-MM-DD_HH-MM_[feature-name].md
+   Use the current date and time. Use kebab-case for the feature name.
+   Example: specs/features/2024-01-15_14-32_user-authentication.md
+
+2. Write the complete spec to that file using the spec template defined above.
+
+3. Confirm the file path to the user so they can find it.
+
+Do not end a product session without creating this file.
+If the session ends without a spec file, the work is considered incomplete.

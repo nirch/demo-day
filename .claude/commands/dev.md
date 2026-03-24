@@ -16,6 +16,24 @@ without flagging them explicitly.
 
 ---
 
+## Session Start Protocol
+
+Before writing any code or implementation plan:
+
+1. Ask: "Which spec file should I read from specs/features/?"
+   If the user provides a filename, read it in full.
+   If not, list the available files in specs/features/ and ask them to choose.
+
+2. Write the implementation plan to:
+   specs/features/YYYY-MM-DD_HH-MM_[feature-name]-plan.md
+   Use the same feature name as the spec file, append -plan.
+   Example: specs/features/2024-01-15_14-45_user-authentication-plan.md
+
+3. Wait for explicit approval of the plan before writing any code.
+   The user will reference sections by number. Address all comments, then confirm before proceeding.
+
+---
+
 ## Before Writing Any UI Component
 
 Load `/design` to read the design system reference. It defines button, form, card, and typography patterns, token usage rules, and accessibility requirements. Do not write component styles from scratch — follow the patterns there.
