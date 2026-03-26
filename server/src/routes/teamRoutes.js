@@ -8,11 +8,10 @@ const teamController = require('../controllers/teamController');
 const router = Router({ mergeParams: true });
 
 router.use(auth);
-router.use(requireRole('admin'));
 
-router.get('/', teamController.listTeams);
-router.post('/', createTeamValidators, validate, teamController.createTeam);
-router.put('/:teamId', updateTeamValidators, validate, teamController.updateTeam);
-router.delete('/:teamId', teamController.deleteTeam);
+router.get('/', requireRole('admin', 'judge'), teamController.listTeams);
+router.post('/', requireRole('admin'), createTeamValidators, validate, teamController.createTeam);
+router.put('/:teamId', requireRole('admin'), updateTeamValidators, validate, teamController.updateTeam);
+router.delete('/:teamId', requireRole('admin'), teamController.deleteTeam);
 
 module.exports = router;

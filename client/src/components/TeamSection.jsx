@@ -5,7 +5,7 @@ import TeamForm from './TeamForm';
 import ConfirmDialog from './ConfirmDialog';
 import Button from './Button';
 
-export default function TeamSection({ eventId, eventStatus }) {
+export default function TeamSection({ eventId, eventStatus, readOnly = false }) {
   const [teams, setTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
@@ -13,7 +13,7 @@ export default function TeamSection({ eventId, eventStatus }) {
   const [editingTeamId, setEditingTeamId] = useState(null);
   const [deletingTeam, setDeletingTeam] = useState(null);
 
-  const isDraft = eventStatus === 'draft';
+  const isDraft = eventStatus === 'draft' && !readOnly;
 
   const fetchTeams = useCallback(async () => {
     setIsLoading(true);

@@ -41,6 +41,11 @@ module.exports = (sequelize) => {
         key: 'id',
       },
     },
+    judge_invite_token: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      unique: true,
+    },
   }, {
     tableName: 'events',
     underscored: true,

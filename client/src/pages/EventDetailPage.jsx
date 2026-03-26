@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import * as eventService from '../services/eventService';
 import StatusBadge from '../components/StatusBadge';
 import Button from '../components/Button';
 import TeamSection from '../components/TeamSection';
 import ScoringCriteriaSection from '../components/ScoringCriteriaSection';
+import InviteJudgeSection from '../components/InviteJudgeSection';
 
 export default function EventDetailPage() {
   const { id } = useParams();
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -119,8 +123,9 @@ export default function EventDetailPage() {
         </dl>
       </div>
 
-      <TeamSection eventId={id} eventStatus={event.status} />
-      <ScoringCriteriaSection eventId={id} eventStatus={event.status} />
+      {isAdmin && <InviteJudgeSection eventId={id} />}
+      <TeamSection eventId={id} eventStatus={event.status} readOnly={!isAdmin} />
+      {isAdmin && <ScoringCriteriaSection eventId={id} eventStatus={event.status} />}
     </div>
   );
 }

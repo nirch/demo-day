@@ -10,7 +10,7 @@ export default function Layout() {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="text-2xl font-semibold text-text-primary">Demo Day</span>
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-text-secondary">{user?.email}</span>
+            <span className="text-sm font-medium text-text-secondary">{user?.email || user?.name}</span>
             <button
               onClick={logout}
               className="

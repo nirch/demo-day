@@ -31,6 +31,13 @@ export function AuthProvider({ children }) {
     navigate('/');
   }, [navigate]);
 
+  const loginAsJudge = useCallback(({ token: jwtToken, user: judgeUser }) => {
+    localStorage.setItem('token', jwtToken);
+    localStorage.setItem('user', JSON.stringify(judgeUser));
+    setToken(jwtToken);
+    setUser(judgeUser);
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -40,7 +47,7 @@ export function AuthProvider({ children }) {
   }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, token, login, loginAsJudge, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
