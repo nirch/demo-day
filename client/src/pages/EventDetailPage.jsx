@@ -12,6 +12,7 @@ export default function EventDetailPage() {
   const { id } = useParams();
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
+  const isJudge = user?.role === 'judge';
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -126,7 +127,7 @@ export default function EventDetailPage() {
       </div>
 
       {isAdmin && <InviteJudgeSection eventId={id} />}
-      <TeamSection eventId={id} eventStatus={event.status} readOnly={!isAdmin} />
+      <TeamSection eventId={id} eventStatus={event.status} readOnly={!isAdmin} isJudge={isJudge} />
       {isAdmin && <ScoringCriteriaSection eventId={id} eventStatus={event.status} />}
     </div>
   );

@@ -8,9 +8,8 @@ const criteriaController = require('../controllers/criteriaController');
 const router = Router({ mergeParams: true });
 
 router.use(auth);
-router.use(requireRole('admin'));
 
-router.get('/', criteriaController.listCriteria);
+router.get('/', requireRole('admin', 'judge'), criteriaController.listCriteria);
 router.post('/', createCriterionValidators, validate, criteriaController.createCriterion);
 router.put('/reorder', reorderCriteriaValidators, validate, criteriaController.reorderCriteria);
 router.put('/:criterionId', updateCriterionValidators, validate, criteriaController.updateCriterion);

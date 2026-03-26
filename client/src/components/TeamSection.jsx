@@ -1,17 +1,24 @@
 import { useState, useEffect, useCallback } from 'react';
 import * as teamService from '../services/teamService';
+import * as criteriaService from '../services/criteriaService';
+import * as scoreService from '../services/scoreService';
 import TeamCard from './TeamCard';
 import TeamForm from './TeamForm';
 import ConfirmDialog from './ConfirmDialog';
+import ScoringModal from './ScoringModal';
 import Button from './Button';
 
-export default function TeamSection({ eventId, eventStatus, readOnly = false }) {
+export default function TeamSection({ eventId, eventStatus, readOnly = false, isJudge = false }) {
   const [teams, setTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTeamId, setEditingTeamId] = useState(null);
   const [deletingTeam, setDeletingTeam] = useState(null);
+
+  const [criteria, setCriteria] = useState([]);
+  const [scoredTeamIds, setScoredTeamIds] = useState({});
+  const [scoringTeam, setScoringTeam] = useState(null);
 
   const isDraft = eventStatus === 'draft' && !readOnly;
 
@@ -32,6 +39,25 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false }) 
     fetchTeams();
   }, [fetchTeams]);
 
+  useEffect(() => {
+    if (!isJudge) return;
+
+    const fetchJudgeData = async () => {
+      try {
+        const [fetchedCriteria, summary] = await Promise.all([
+          criteriaService.getCriteria(eventId),
+          scoreService.getScoresSummary(eventId),
+        ]);
+        setCriteria(fetchedCriteria.sort((a, b) => a.sort_order - b.sort_order));
+        setScoredTeamIds(summary);
+      } catch {
+        // non-fatal — scoring will still work, just without pre-loaded data
+      }
+    };
+
+    fetchJudgeData();
+  }, [eventId, isJudge]);
+
   const handleAddSave = async (values) => {
     await teamService.createTeam(eventId, values);
     setShowAddForm(false);
@@ -48,6 +74,11 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false }) 
     await teamService.deleteTeam(eventId, deletingTeam.id);
     setDeletingTeam(null);
     await fetchTeams();
+  };
+
+  const handleScoringSuccess = (teamId) => {
+    setScoredTeamIds((prev) => ({ ...prev, [teamId]: true }));
+    setScoringTeam(null);
   };
 
   if (isLoading) {
@@ -132,6 +163,9 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false }) 
                   isDraft={isDraft}
                   onEdit={() => setEditingTeamId(team.id)}
                   onDelete={() => setDeletingTeam(team)}
+                  isJudge={isJudge}
+                  hasScored={!!scoredTeamIds[team.id]}
+                  onScore={() => setScoringTeam(team)}
                 />
               )}
             </div>
@@ -146,6 +180,16 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false }) 
           confirmLabel="Remove"
           onConfirm={handleDeleteConfirm}
           onCancel={() => setDeletingTeam(null)}
+        />
+      )}
+
+      {scoringTeam && (
+        <ScoringModal
+          team={scoringTeam}
+          criteria={criteria}
+          eventId={eventId}
+          onClose={() => setScoringTeam(null)}
+          onSuccess={handleScoringSuccess}
         />
       )}
     </section>

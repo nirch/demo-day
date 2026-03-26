@@ -1,13 +1,23 @@
 import Button from './Button';
 
-export default function TeamCard({ team, isDraft, onEdit, onDelete }) {
+export default function TeamCard({ team, isDraft, onEdit, onDelete, isJudge, hasScored, onScore }) {
   return (
     <div className="bg-bg-surface border border-border-card rounded-md px-6 py-5 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div className="min-w-0">
-          <h3 className="text-xl font-semibold tracking-tight text-text-primary">
-            {team.name}
-          </h3>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="text-xl font-semibold tracking-tight text-text-primary">
+              {team.name}
+            </h3>
+            {isJudge && hasScored && (
+              <span className="inline-flex items-center gap-1 bg-accent-subtle text-accent text-xs font-medium px-2 py-0.5 rounded-pill">
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+                Scored
+              </span>
+            )}
+          </div>
           <p className="text-base text-text-secondary mt-1 whitespace-pre-line">
             {team.members}
           </p>
@@ -54,16 +64,23 @@ export default function TeamCard({ team, isDraft, onEdit, onDelete }) {
           )}
         </div>
 
-        {isDraft && (
-          <div className="flex gap-2 shrink-0">
-            <Button variant="secondary" onClick={onEdit}>
-              Edit
+        <div className="flex gap-2 shrink-0">
+          {isJudge && (
+            <Button variant={hasScored ? 'secondary' : 'primary'} onClick={onScore}>
+              {hasScored ? 'Edit Scores' : 'Score Team'}
             </Button>
-            <Button variant="danger" onClick={onDelete}>
-              Remove
-            </Button>
-          </div>
-        )}
+          )}
+          {isDraft && (
+            <>
+              <Button variant="secondary" onClick={onEdit}>
+                Edit
+              </Button>
+              <Button variant="danger" onClick={onDelete}>
+                Remove
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

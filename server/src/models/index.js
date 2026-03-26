@@ -15,6 +15,8 @@ const Event = require('./Event')(sequelize);
 const Team = require('./Team')(sequelize);
 const Criterion = require('./Criterion')(sequelize);
 const EventJudge = require('./EventJudge')(sequelize);
+const Score = require('./Score')(sequelize);
+const TeamComment = require('./TeamComment')(sequelize);
 
 User.hasMany(Event, { foreignKey: 'created_by', as: 'events' });
 Event.belongsTo(User, { foreignKey: 'created_by', as: 'creator' });
@@ -30,4 +32,13 @@ User.belongsToMany(Event, { through: EventJudge, foreignKey: 'user_id', otherKey
 EventJudge.belongsTo(Event, { foreignKey: 'event_id' });
 EventJudge.belongsTo(User, { foreignKey: 'user_id' });
 
-module.exports = { sequelize, User, Event, Team, Criterion, EventJudge };
+Score.belongsTo(Event, { foreignKey: 'event_id' });
+Score.belongsTo(Team, { foreignKey: 'team_id' });
+Score.belongsTo(Criterion, { foreignKey: 'criterion_id' });
+Score.belongsTo(User, { foreignKey: 'judge_id', as: 'judge' });
+
+TeamComment.belongsTo(Event, { foreignKey: 'event_id' });
+TeamComment.belongsTo(Team, { foreignKey: 'team_id' });
+TeamComment.belongsTo(User, { foreignKey: 'judge_id', as: 'judge' });
+
+module.exports = { sequelize, User, Event, Team, Criterion, EventJudge, Score, TeamComment };
