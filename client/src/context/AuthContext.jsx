@@ -31,9 +31,10 @@ export function AuthProvider({ children }) {
     navigate('/');
   }, [navigate]);
 
-  const loginAsJudge = useCallback(({ token: jwtToken, user: judgeUser }) => {
+  const loginAsJudge = useCallback(({ token: jwtToken, user: judgeUser, eventId }) => {
     localStorage.setItem('token', jwtToken);
     localStorage.setItem('user', JSON.stringify(judgeUser));
+    if (eventId) localStorage.setItem('judgeEventId', eventId);
     setToken(jwtToken);
     setUser(judgeUser);
   }, []);
@@ -41,6 +42,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('judgeEventId');
     setToken(null);
     setUser(null);
     navigate('/login');

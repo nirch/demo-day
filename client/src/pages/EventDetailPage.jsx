@@ -71,17 +71,19 @@ export default function EventDetailPage() {
 
   return (
     <div>
-      <Link
-        to="/"
-        className="
-          text-sm font-medium text-text-secondary
-          hover:text-text-primary transition-colors duration-base
-          focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
-          rounded-sm inline-block mb-4
-        "
-      >
-        &larr; Back to Events
-      </Link>
+      {isAdmin && (
+        <Link
+          to="/"
+          className="
+            text-sm font-medium text-text-secondary
+            hover:text-text-primary transition-colors duration-base
+            focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
+            rounded-sm inline-block mb-4
+          "
+        >
+          &larr; Back to Events
+        </Link>
+      )}
 
       <div className="flex items-center gap-3 mb-7">
         <h1 className="text-3xl font-semibold tracking-tight text-text-primary">

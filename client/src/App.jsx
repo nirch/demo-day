@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import EventListPage from './pages/EventListPage';
@@ -16,8 +17,10 @@ export default function App() {
         <Route path="/judge-invite/:token" element={<JudgeJoinPage />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
-            <Route path="/" element={<EventListPage />} />
-            <Route path="/events/new" element={<CreateEventPage />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/" element={<EventListPage />} />
+              <Route path="/events/new" element={<CreateEventPage />} />
+            </Route>
             <Route path="/events/:id" element={<EventDetailPage />} />
           </Route>
         </Route>

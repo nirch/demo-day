@@ -80,7 +80,7 @@ export default function JudgeJoinPage() {
     setIsSubmitting(true);
     try {
       const result = await judgeInviteService.joinAsJudge(token, formData);
-      loginAsJudge({ token: result.token, user: result.user });
+      loginAsJudge({ token: result.token, user: result.user, eventId: result.event.id });
       navigate(`/events/${result.event.id}`, { replace: true });
     } catch (err) {
       if (err.response?.status === 409) {
