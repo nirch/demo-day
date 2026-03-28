@@ -14,3 +14,8 @@ export const getScoresSummary = async (eventId) => {
   const response = await api.get(`/events/${eventId}/teams/scores-summary`);
   return response.data.data;
 };
+
+export const getScoringsSummary = async (eventId) => {
+  const response = await api.get(`/events/${eventId}/scoring-summary`);
+  return response.data.data;
+};

@@ -31,4 +31,14 @@ const getScoresSummary = async (req, res, next) => {
   }
 };
 
-module.exports = { getScores, putScores, getScoresSummary };
+const getScoringsSummaryAdmin = async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+    const summary = await scoreService.getScoringsSummaryAdmin(eventId);
+    res.json({ data: summary, error: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getScores, putScores, getScoresSummary, getScoringsSummaryAdmin };

@@ -9,6 +9,7 @@ const teamRoutes = require('./routes/teamRoutes');
 const criteriaRoutes = require('./routes/criteriaRoutes');
 const { adminRouter: judgeInviteAdminRoutes, publicRouter: judgeInvitePublicRoutes } = require('./routes/judgeInviteRoutes');
 const scoreRoutes = require('./routes/scoreRoutes');
+const scoringsSummaryRoutes = require('./routes/scoringsSummaryRoutes');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/events/:eventId/teams', teamRoutes);
 app.use('/api/events/:eventId/criteria', criteriaRoutes);
 app.use('/api/events/:eventId', scoreRoutes);
+app.use('/api/events/:eventId', scoringsSummaryRoutes);
 app.use('/api/events/:eventId/judge-invite', judgeInviteAdminRoutes);
 app.use('/api/judge-invite', judgeInvitePublicRoutes);
 

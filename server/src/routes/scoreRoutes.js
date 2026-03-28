@@ -8,10 +8,9 @@ const scoreController = require('../controllers/scoreController');
 const router = Router({ mergeParams: true });
 
 router.use(auth);
-router.use(requireRole('judge'));
 
-router.get('/teams/scores-summary', scoreController.getScoresSummary);
-router.get('/teams/:teamId/scores', scoreController.getScores);
-router.put('/teams/:teamId/scores', putScoresValidators, validate, scoreController.putScores);
+router.get('/teams/scores-summary', requireRole('judge'), scoreController.getScoresSummary);
+router.get('/teams/:teamId/scores', requireRole('judge'), scoreController.getScores);
+router.put('/teams/:teamId/scores', requireRole('judge'), putScoresValidators, validate, scoreController.putScores);
 
 module.exports = router;

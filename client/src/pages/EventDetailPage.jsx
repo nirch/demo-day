@@ -126,6 +126,24 @@ export default function EventDetailPage() {
         </dl>
       </div>
 
+      {isAdmin && (
+        <div className="mt-6">
+          <Link
+            to={`/events/${id}/scoring-summary`}
+            className="
+              inline-block bg-accent text-white
+              text-md font-medium tracking-tight
+              px-6 py-[11px] rounded-sm
+              transition-colors duration-base
+              hover:opacity-90
+              focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
+            "
+          >
+            View Scoring Summary
+          </Link>
+        </div>
+      )}
+
       {isAdmin && <InviteJudgeSection eventId={id} />}
       <TeamSection eventId={id} eventStatus={event.status} readOnly={!isAdmin} isJudge={isJudge} />
       {isAdmin && <ScoringCriteriaSection eventId={id} eventStatus={event.status} />}

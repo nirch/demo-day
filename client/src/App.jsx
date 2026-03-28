@@ -8,6 +8,7 @@ import EventListPage from './pages/EventListPage';
 import CreateEventPage from './pages/CreateEventPage';
 import EventDetailPage from './pages/EventDetailPage';
 import JudgeJoinPage from './pages/JudgeJoinPage';
+import ScoringsSummaryPage from './pages/ScoringsSummaryPage';
 
 export default function App() {
   return (
@@ -22,6 +23,9 @@ export default function App() {
               <Route path="/events/new" element={<CreateEventPage />} />
             </Route>
             <Route path="/events/:id" element={<EventDetailPage />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/events/:id/scoring-summary" element={<ScoringsSummaryPage />} />
+            </Route>
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

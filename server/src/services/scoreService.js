@@ -1,4 +1,4 @@
-const { sequelize, Score, TeamComment, EventJudge, Criterion, Event } = require('../models');
+const { sequelize, Score, TeamComment, EventJudge, Criterion, Event, Team, User } = require('../models');
 
 const SCORE_ATTRIBUTES = ['criterion_id', 'value'];
 const COMMENT_ATTRIBUTES = ['comment'];
@@ -154,4 +154,81 @@ const getScoresSummary = async (eventId, judgeId) => {
   return summary;
 };
 
-module.exports = { upsertScores, getScores, getScoresSummary };
+const getScoringsSummaryAdmin = async (eventId) => {
+  const event = await Event.findByPk(eventId, { attributes: ['id', 'name'] });
+
+  if (!event) {
+    const err = new Error('Event not found');
+    err.status = 404;
+    throw err;
+  }
+
+  const [criteria, eventWithJudges, teams, allScores, allComments] = await Promise.all([
+    Criterion.findAll({
+      where: { event_id: eventId },
+      attributes: ['id', 'name', 'sort_order'],
+      order: [['sort_order', 'ASC']],
+    }),
+    Event.findByPk(eventId, {
+      include: [{ model: User, as: 'judges', attributes: ['id', 'name'], through: { attributes: [] } }],
+    }),
+    Team.findAll({
+      where: { event_id: eventId },
+      attributes: ['id', 'name'],
+      order: [['name', 'ASC']],
+    }),
+    Score.findAll({
+      where: { event_id: eventId },
+      attributes: ['team_id', 'criterion_id', 'judge_id', 'value'],
+    }),
+    TeamComment.findAll({
+      where: { event_id: eventId },
+      attributes: ['team_id', 'judge_id', 'comment'],
+    }),
+  ]);
+
+  const judges = eventWithJudges.judges || [];
+  const expectedPerTeam = criteria.length * judges.length;
+
+  const teamsData = teams.map((team) => {
+    const teamScores = allScores.filter((s) => s.team_id === team.id);
+    const teamComments = allComments.filter((c) => c.team_id === team.id);
+    const totalScores = teamScores.length;
+    const sum = teamScores.reduce((acc, s) => acc + s.value, 0);
+    const averageScore = totalScores > 0 ? Math.round((sum / totalScores) * 10) / 10 : null;
+
+    return {
+      id: team.id,
+      name: team.name,
+      averageScore,
+      totalScores,
+      expectedScores: expectedPerTeam,
+      isComplete: expectedPerTeam > 0 && totalScores === expectedPerTeam,
+      scores: teamScores.map((s) => ({
+        criterionId: s.criterion_id,
+        judgeId: s.judge_id,
+        value: s.value,
+      })),
+      comments: teamComments.map((c) => ({
+        judgeId: c.judge_id,
+        comment: c.comment,
+      })),
+    };
+  });
+
+  teamsData.sort((a, b) => {
+    if (a.averageScore === null && b.averageScore === null) return 0;
+    if (a.averageScore === null) return 1;
+    if (b.averageScore === null) return -1;
+    return b.averageScore - a.averageScore;
+  });
+
+  return {
+    event: { id: event.id, name: event.name },
+    criteria: criteria.map((c) => ({ id: c.id, name: c.name, sortOrder: c.sort_order })),
+    judges: judges.map((j) => ({ id: j.id, name: j.name })),
+    teams: teamsData,
+  };
+};
+
+module.exports = { upsertScores, getScores, getScoresSummary, getScoringsSummaryAdmin };
