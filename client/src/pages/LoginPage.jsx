@@ -75,7 +75,7 @@ export default function LoginPage() {
               onBlur={handleBlur}
               error={errors.email}
               placeholder="admin@demoday.com"
-              autoComplete="email"
+              autoComplete="off"
             />
 
             <Input
