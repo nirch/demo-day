@@ -7,6 +7,8 @@ export default function ConfirmDialog({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   variant = 'danger',
+  isLoading = false,
+  isDisabled = false,
   onConfirm,
   onCancel,
 }) {
@@ -73,10 +75,10 @@ export default function ConfirmDialog({
           {message}
         </p>
         <div className="flex justify-end gap-3">
-          <Button ref={cancelRef} variant="secondary" onClick={onCancel}>
+          <Button ref={cancelRef} variant="secondary" onClick={onCancel} disabled={isDisabled || isLoading}>
             {cancelLabel}
           </Button>
-          <Button variant={variant} onClick={onConfirm}>
+          <Button variant={variant} onClick={onConfirm} isLoading={isLoading} disabled={isDisabled}>
             {confirmLabel}
           </Button>
         </div>

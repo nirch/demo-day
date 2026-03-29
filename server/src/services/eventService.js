@@ -45,4 +45,22 @@ const findById = async (id) => {
   });
 };
 
-module.exports = { findAll, create, findById };
+const remove = async (id) => {
+  const event = await Event.findByPk(id, { attributes: ['id', 'status'] });
+
+  if (!event) {
+    const err = new Error('Event not found');
+    err.status = 404;
+    throw err;
+  }
+
+  if (event.status !== 'draft') {
+    const err = new Error('Only draft events can be deleted');
+    err.status = 409;
+    throw err;
+  }
+
+  await event.destroy();
+};
+
+module.exports = { findAll, create, findById, remove };

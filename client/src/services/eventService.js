@@ -14,3 +14,8 @@ export const getEvent = async (id) => {
   const response = await api.get(`/events/${id}`);
   return response.data.data;
 };
+
+export const deleteEvent = async (id) => {
+  const response = await api.delete(`/events/${id}`);
+  return response.data.data;
+};

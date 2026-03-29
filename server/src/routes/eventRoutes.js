@@ -12,5 +12,6 @@ router.use(auth);
 router.get('/', eventController.listEvents);
 router.post('/', requireRole('admin'), createEventValidators, validate, eventController.createEvent);
 router.get('/:id', eventController.getEvent);
+router.delete('/:id', requireRole('admin'), eventController.deleteEvent);
 
 module.exports = router;

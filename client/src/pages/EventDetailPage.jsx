@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import * as eventService from '../services/eventService';
 import StatusBadge from '../components/StatusBadge';
 import Button from '../components/Button';
+import ConfirmDialog from '../components/ConfirmDialog';
 import TeamSection from '../components/TeamSection';
 import ScoringCriteriaSection from '../components/ScoringCriteriaSection';
 import InviteJudgeSection from '../components/InviteJudgeSection';
 
 export default function EventDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
   const isJudge = user?.role === 'judge';
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -147,6 +152,52 @@ export default function EventDetailPage() {
       {isAdmin && <InviteJudgeSection eventId={id} />}
       <TeamSection eventId={id} eventStatus={event.status} readOnly={!isAdmin} isJudge={isJudge} />
       {isAdmin && <ScoringCriteriaSection eventId={id} eventStatus={event.status} />}
+
+      {isAdmin && event.status === 'draft' && (
+        <div className="mt-6">
+          <Button
+            variant="danger"
+            onClick={() => setShowDeleteConfirm(true)}
+          >
+            Delete Event
+          </Button>
+          {deleteError && (
+            <p className="text-xs text-red-500 mt-2" role="alert">
+              {deleteError}
+            </p>
+          )}
+        </div>
+      )}
+
+      {showDeleteConfirm && (
+        <ConfirmDialog
+          title="Delete Event"
+          message="Are you sure you want to delete this event? This will permanently remove all teams, criteria, scores, and judge assignments."
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          variant="danger"
+          isLoading={isDeleting}
+          onCancel={() => {
+            setShowDeleteConfirm(false);
+            setDeleteError(null);
+          }}
+          onConfirm={async () => {
+            setIsDeleting(true);
+            setDeleteError(null);
+            try {
+              await eventService.deleteEvent(id);
+              navigate('/');
+            } catch (err) {
+              const message =
+                err.response?.data?.error || 'Failed to delete event. Please try again.';
+              setDeleteError(message);
+              setShowDeleteConfirm(false);
+            } finally {
+              setIsDeleting(false);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

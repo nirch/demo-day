@@ -39,4 +39,13 @@ const getEvent = async (req, res, next) => {
   }
 };
 
-module.exports = { listEvents, createEvent, getEvent };
+const deleteEvent = async (req, res, next) => {
+  try {
+    await eventService.remove(req.params.id);
+    res.json({ data: { message: 'Event deleted successfully' }, error: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { listEvents, createEvent, getEvent, deleteEvent };
