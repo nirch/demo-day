@@ -76,6 +76,32 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false, is
     await fetchTeams();
   };
 
+  const handleMoveUp = async (index) => {
+    if (index === 0) return;
+    const reordered = [...teams];
+    [reordered[index - 1], reordered[index]] = [reordered[index], reordered[index - 1]];
+    setTeams(reordered);
+    const orderedIds = reordered.map((t) => t.id);
+    try {
+      await teamService.reorderTeams(eventId, orderedIds);
+    } catch {
+      await fetchTeams();
+    }
+  };
+
+  const handleMoveDown = async (index) => {
+    if (index === teams.length - 1) return;
+    const reordered = [...teams];
+    [reordered[index], reordered[index + 1]] = [reordered[index + 1], reordered[index]];
+    setTeams(reordered);
+    const orderedIds = reordered.map((t) => t.id);
+    try {
+      await teamService.reorderTeams(eventId, orderedIds);
+    } catch {
+      await fetchTeams();
+    }
+  };
+
   const handleScoringSuccess = (teamId) => {
     setScoredTeamIds((prev) => ({ ...prev, [teamId]: true }));
     setScoringTeam(null);
@@ -149,7 +175,7 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false, is
         </div>
       ) : (
         <div className="flex flex-col gap-3" role="list" aria-live="polite">
-          {teams.map((team) => (
+          {teams.map((team, index) => (
             <div key={team.id} role="listitem">
               {editingTeamId === team.id ? (
                 <TeamForm
@@ -166,6 +192,10 @@ export default function TeamSection({ eventId, eventStatus, readOnly = false, is
                   isJudge={isJudge}
                   hasScored={!!scoredTeamIds[team.id]}
                   onScore={() => setScoringTeam(team)}
+                  onMoveUp={() => handleMoveUp(index)}
+                  onMoveDown={() => handleMoveDown(index)}
+                  isFirst={index === 0}
+                  isLast={index === teams.length - 1}
                 />
               )}
             </div>

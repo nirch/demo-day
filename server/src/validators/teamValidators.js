@@ -36,4 +36,11 @@ const updateTeamValidators = [
     .isURL().withMessage('Live app URL must be a valid URL'),
 ];
 
-module.exports = { createTeamValidators, updateTeamValidators };
+const reorderTeamsValidators = [
+  body('orderedIds')
+    .isArray({ min: 1 }).withMessage('orderedIds must be a non-empty array'),
+  body('orderedIds.*')
+    .isUUID().withMessage('Each ID must be a valid UUID'),
+];
+
+module.exports = { createTeamValidators, updateTeamValidators, reorderTeamsValidators };

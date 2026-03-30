@@ -1,6 +1,6 @@
 import Button from './Button';
 
-export default function TeamCard({ team, isDraft, onEdit, onDelete, isJudge, hasScored, onScore }) {
+export default function TeamCard({ team, isDraft, onEdit, onDelete, isJudge, hasScored, onScore, onMoveUp, onMoveDown, isFirst, isLast }) {
   return (
     <div className="bg-bg-surface border border-border-card rounded-md px-6 py-5 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
@@ -65,6 +65,34 @@ export default function TeamCard({ team, isDraft, onEdit, onDelete, isJudge, has
         </div>
 
         <div className="flex gap-2 shrink-0">
+          {isDraft && (
+            <>
+              <button
+                type="button"
+                onClick={onMoveUp}
+                disabled={isFirst}
+                aria-label={`Move ${team.name} up`}
+                className="p-2 rounded-sm border border-border-card transition-colors duration-base hover:bg-bg-page focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ visibility: isFirst ? 'hidden' : 'visible' }}
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={onMoveDown}
+                disabled={isLast}
+                aria-label={`Move ${team.name} down`}
+                className="p-2 rounded-sm border border-border-card transition-colors duration-base hover:bg-bg-page focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ visibility: isLast ? 'hidden' : 'visible' }}
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+            </>
+          )}
           {isJudge && (
             <Button variant={hasScored ? 'secondary' : 'primary'} onClick={onScore}>
               {hasScored ? 'Edit Scores' : 'Score Team'}

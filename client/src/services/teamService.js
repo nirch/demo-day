@@ -18,3 +18,8 @@ export const updateTeam = async (eventId, teamId, payload) => {
 export const deleteTeam = async (eventId, teamId) => {
   await api.delete(`/events/${eventId}/teams/${teamId}`);
 };
+
+export const reorderTeams = async (eventId, orderedIds) => {
+  const response = await api.put(`/events/${eventId}/teams/reorder`, { orderedIds });
+  return response.data.data;
+};

@@ -31,6 +31,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING(500),
       allowNull: true,
     },
+    sort_order: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
   }, {
     tableName: 'teams',
     underscored: true,

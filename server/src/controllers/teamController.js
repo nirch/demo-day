@@ -48,4 +48,14 @@ const deleteTeam = async (req, res, next) => {
   }
 };
 
-module.exports = { listTeams, createTeam, updateTeam, deleteTeam };
+const reorderTeams = async (req, res, next) => {
+  try {
+    const { orderedIds } = req.body;
+    const teams = await teamService.reorder(req.params.eventId, orderedIds);
+    res.json({ data: teams, error: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { listTeams, createTeam, updateTeam, deleteTeam, reorderTeams };
